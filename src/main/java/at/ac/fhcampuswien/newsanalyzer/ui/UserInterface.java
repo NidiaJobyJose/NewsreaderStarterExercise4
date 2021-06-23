@@ -3,6 +3,8 @@ package at.ac.fhcampuswien.newsanalyzer.ui;
 
 import at.ac.fhcampuswien.newsanalyzer.ctrl.Controller;
 import at.ac.fhcampuswien.newsanalyzer.ctrl.NewsAPIException;
+import at.ac.fhcampuswien.newsanalyzer.downloader.ParallelDownloader;
+import at.ac.fhcampuswien.newsanalyzer.downloader.SequentialDownloader;
 import at.ac.fhcampuswien.newsapi.NewsApi;
 import at.ac.fhcampuswien.newsapi.NewsApiBuilder;
 import at.ac.fhcampuswien.newsapi.enums.Country;
@@ -11,6 +13,7 @@ import at.ac.fhcampuswien.newsapi.enums.Endpoint;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class UserInterface {
 
@@ -35,7 +38,16 @@ public class UserInterface {
 		}
 
 		System.out.println(result);
+	} private void getLastSearchSequence()throws NewsAPIException{
+		List<String> URLs = ctrl.getURLs();
+		SequentialDownloader sequence = new SequentialDownloader();
+		sequence.process(URLs);
+	} private void getLastSearchParallel()throws NewsAPIException{
+		List<String> URLs = ctrl.getURLs();
+		ParallelDownloader parallel = new ParallelDownloader();
+		parallel.process(URLs);
 	}
+
 
 
 	public void start() {

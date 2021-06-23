@@ -84,4 +84,11 @@ public class Controller {
 				.map(stringListEntry -> stringListEntry.getKey() + " " + stringListEntry.getValue().size())
 				.orElseThrow();
 	}
+	public List<String> getURLs()throws NewsAPIException{
+		if (articles==null)
+			throw new NewsAPIException("Load data first");
+		return articles.stream()
+				.map(Article::getUrl)
+				.collect(Collectors.toList());
+	}
 }
